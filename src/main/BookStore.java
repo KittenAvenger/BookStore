@@ -91,8 +91,6 @@ public class BookStore implements BookList {
 		return statusList;
 	}
 	
-	//TODO book names are ambigious and so are some of the authors, maybe make a choice list?
-	
 	/*
 	 *	Add book to cart, if it exists already just increment the quantity
 	 */
