@@ -66,7 +66,7 @@ public class BookStore implements BookList {
 					statusList[i] = 1;
 			}
 			else
-				statusList[i] = 3;
+				statusList[i] = 2;
 			i++;
 		}
 		
@@ -88,6 +88,8 @@ public class BookStore implements BookList {
 		
 		book.setQuantity(1);
 		cart.add(book);
+		System.out.println("Book was added to cart");
+
 	}
 	
 	public void removeBookFromCart(Book book){

@@ -55,15 +55,18 @@ public class Main {
 					
 					
 					break;
-					//TODO confirm that a book was added
+					
 				case 3:
+					
 					System.out.println("Add the title of the book you want to add to cart: ");
 					String title = scan.nextLine();
 					Book book = new Book();
 					book.setTitle(title);
 					bookStore.addBookToCart(book);
 					break;
+					
 				case 4:
+					
 					System.out.println("Remove a book from your cart by writing the title: ");
 					String titleRemove = scan.nextLine();
 					Book book2 = new Book();
@@ -76,9 +79,21 @@ public class Main {
 					ArrayList <Book> cart = bookStore.cart;
 					int [] statusList = bookStore.buy(cart);
 					
+					String OK = "OK";
+					String NOT_IN_STOCK = "NOT_IN_STOCK";
+					String DOES_NOT_EXIST = "DOES_NOT_EXIST";
+					String status = "";
+					
 					for(int i = 0; i < statusList.length; i++){
-						System.out.printf("%-20.20s %20d \n", cart.get(i).getTitle(), statusList[i]);
+						if(statusList[i] == 0)
+							status = OK;
+						else if(statusList[i] == 1)
+							status = NOT_IN_STOCK;
+						else if(statusList[i] == 2)
+							status = DOES_NOT_EXIST;
+						System.out.printf("%-20.20s %20s \n", cart.get(i).getTitle(), status);
 					}
+					
 					break;
 					
 				case 6:
