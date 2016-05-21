@@ -99,7 +99,7 @@ public class testUserInput {
 		int [] statusList = bookStore.buy(bookStore.cart);
 		
 		assertEquals(statusList[0], 0);
-		assertEquals(statusList[1], 3);
+		assertEquals(statusList[1], 2);
 		
 		Book book3 = new Book();
 		book3.setTitle("How To Spend Money");

@@ -44,11 +44,14 @@ public class BookStore implements BookList {
 		for(Book book2: bookList){
 			if(book.getTitle().equalsIgnoreCase(book2.getTitle())){
 				book2.setQuantity(book2.getQuantity() + quantity);
+				System.out.println("Your book was added to the inventory");
 				return true;
 			}	
 		}
 		
+		book.setQuantity(quantity);
 		bookList.add(book);
+		System.out.println("Your book was added to the inventory");
 		return false;
 	}
 

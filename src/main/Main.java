@@ -8,11 +8,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		BookStore bookStore = new BookStore();
-		boolean isRunning = true;
+		boolean isRunning = true, validNumber = false;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Hello and welcome to the Book Store! Choose an option in the list.\n");
 		while(isRunning){
-			String choice = "";
+			String input = "";
 			System.out.printf("\n");
 			System.out.println("1. Show all books in store");
 			System.out.println("2. Search book after title or author");
@@ -21,12 +21,22 @@ public class Main {
 			System.out.println("5. Checkout books from cart");
 			System.out.println("6. Exit book store");
 			System.out.println("7. Add books to the store inventory");
-			choice = scan.nextLine();
+			input = scan.nextLine();
 						
-			//TODO check if integer before parsing
-			//TODO add view cart
+						
+			int choice = 0;
 			
-			switch (Integer.parseInt(choice)){
+			try{
+				 choice = Integer.parseInt(input);
+				 validNumber = true;
+			}
+			catch (NumberFormatException e){
+				validNumber = false;
+				System.out.println("Please input a number");
+			}
+			
+			while(validNumber){
+				switch (choice){
 				case 1: 
 					Book [] fullList = bookStore.showAll();
 					System.out.printf("%-20s %5s %25s \n\n", "Title", "Author", "Price");
@@ -34,7 +44,7 @@ public class Main {
 					for(Book book: fullList){
 						prettyPrint(book);
 					}
-					
+					validNumber = false;
 					break;
 					
 				case 2:
@@ -53,7 +63,7 @@ public class Main {
 					else
 						System.out.println("No results found");
 					
-					
+					validNumber = false;
 					break;
 					
 				case 3:
@@ -63,6 +73,7 @@ public class Main {
 					Book book = new Book();
 					book.setTitle(title);
 					bookStore.addBookToCart(book);
+					validNumber = false;
 					break;
 					
 				case 4:
@@ -72,8 +83,8 @@ public class Main {
 					Book book2 = new Book();
 					book2.setTitle(titleRemove);
 					bookStore.removeBookFromCart(book2);
+					validNumber = false;
 					break;
-					//TODO add status messages to status codes
 					
 				case 5:	
 					ArrayList <Book> cart = bookStore.cart;
@@ -94,11 +105,16 @@ public class Main {
 						System.out.printf("%-20.20s %20s \n", cart.get(i).getTitle(), status);
 					}
 					
+					if(statusList.length == 0)
+						System.out.println("Your cart is empty");
+					
+					validNumber = false;
 					break;
 					
 				case 6:
 					System.out.println("Book store exited");
 					isRunning = false;
+					validNumber = false;
 					break;
 				case 7:
 					System.out.println("Enter title, author, price and quantity: ");
@@ -107,15 +123,31 @@ public class Main {
 					String price = scan.nextLine();
 					String quantity = scan.nextLine();
 					Book book3 = new Book();
+					int quantityVal = 0;
+					BigDecimal priceVal;
+					
+					try{
+						quantityVal = Integer.parseInt(quantity);
+						priceVal = new BigDecimal(price.replace(",", ""));
+					}
+					catch (NumberFormatException e){
+						System.out.println("Input valid price and/or quantity");
+						break;
+					}
 					
 					book3.setTitle(titleAdd);
 					book3.setAuthor(author);
-					book3.setPrice(new BigDecimal(price.replace(",", "")));
-					bookStore.add(book3, Integer.parseInt(quantity));
+					book3.setPrice(priceVal);
+					bookStore.add(book3, quantityVal);
+					validNumber = false;
 					break;
 				default:
+					System.out.println("Please input a number between 1-7");
+					validNumber = false;
 					break;					
+				}
 			}
+			
 		}
 		
 		scan.close();
