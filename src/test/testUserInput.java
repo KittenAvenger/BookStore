@@ -113,5 +113,4 @@ public class testUserInput {
 		assertEquals(statusList[2], 1);
 	}
 
-	//TODO write tests for adding book to inventory, removing, checkout and adding book to cart
 }

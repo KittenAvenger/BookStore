@@ -24,6 +24,7 @@ public class Main {
 			choice = scan.nextLine();
 						
 			//TODO check if integer before parsing
+			//TODO add view cart
 			
 			switch (Integer.parseInt(choice)){
 				case 1: 
@@ -69,6 +70,8 @@ public class Main {
 					book2.setTitle(titleRemove);
 					bookStore.removeBookFromCart(book2);
 					break;
+					//TODO add status messages to status codes
+					
 				case 5:	
 					ArrayList <Book> cart = bookStore.cart;
 					int [] statusList = bookStore.buy(cart);
