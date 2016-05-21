@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BookParser {
+	
+	/*
+	 *	Parse the URL text file and return the list of books
+	 */
 
 	public static ArrayList <Book> getBookList(){
 		Scanner scan = null;

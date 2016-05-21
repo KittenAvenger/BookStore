@@ -7,11 +7,13 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		BookStore bookStore = new BookStore();
+		BookStore bookStore = new BookStore();		//	Create book inventory and populate from the text file
 		boolean isRunning = true, validNumber = false;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Hello and welcome to the Book Store! Choose an option in the list.\n");
+		
 		while(isRunning){
+			
 			String input = "";
 			System.out.printf("\n");
 			System.out.println("1. Show all books in store");
@@ -32,12 +34,20 @@ public class Main {
 			}
 			catch (NumberFormatException e){
 				validNumber = false;
-				System.out.println("Please input a number");
+				System.out.println("Please input a number");	//	Check if the input is a number from 1-7 otherwise ask for input again
 			}
 			
 			while(validNumber){
+				
+				/*
+				 *	Every number choice corresponds to a case statement that enables the user to
+				 *	perform different functions such as search for books, add a book to cart, 
+				 *	checkout, exit etc
+				 */
+				
 				switch (choice){
 				case 1: 
+					
 					Book [] fullList = bookStore.showAll();
 					System.out.printf("%-20s %5s %25s \n\n", "Title", "Author", "Price");
 					
@@ -48,6 +58,7 @@ public class Main {
 					break;
 					
 				case 2:
+					
 					System.out.println("Enter author or title you want to search for: ");
 					String query = scan.nextLine();
 					Book [] searchResults = bookStore.list(query);
@@ -71,11 +82,16 @@ public class Main {
 					System.out.println("Add the title of the book you want to add to cart: ");
 					String title = scan.nextLine();
 					Book book = new Book();
-					book.setTitle(title);
-					bookStore.addBookToCart(book);
-					validNumber = false;
-					break;
-					
+					if(title.length() > 0){
+						book.setTitle(title);
+						bookStore.addBookToCart(book);
+						validNumber = false;
+						break;
+					}
+					else
+						System.out.println("Title must have at least one letter!");
+						break;	
+						
 				case 4:
 					
 					System.out.println("Remove a book from your cart by writing the title: ");
@@ -87,6 +103,7 @@ public class Main {
 					break;
 					
 				case 5:	
+					
 					ArrayList <Book> cart = bookStore.cart;
 					int [] statusList = bookStore.buy(cart);
 					
@@ -112,11 +129,14 @@ public class Main {
 					break;
 					
 				case 6:
+					
 					System.out.println("Book store exited");
 					isRunning = false;
 					validNumber = false;
 					break;
+					
 				case 7:
+					
 					System.out.println("Enter title, author, price and quantity: ");
 					String titleAdd = scan.nextLine();
 					String author = scan.nextLine();
@@ -141,7 +161,9 @@ public class Main {
 					bookStore.add(book3, quantityVal);
 					validNumber = false;
 					break;
+					
 				default:
+					
 					System.out.println("Please input a number between 1-7");
 					validNumber = false;
 					break;					
@@ -152,6 +174,10 @@ public class Main {
 		
 		scan.close();
 	}
+	
+	/*
+	 *	Print a nicely formatted string of each book 
+	 */
 	
 	public static void prettyPrint(Book book){
 		System.out.printf("%-20.20s %-20.20s %10d \n", book.getTitle(), book.getAuthor(), book.getPrice().intValue());

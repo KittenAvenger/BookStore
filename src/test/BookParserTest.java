@@ -11,14 +11,6 @@ import main.Book;
 import main.BookParser;
 
 public class BookParserTest {
-
-/*	@Ignore
-	public void testParserTitle() {
-		String testString = "Mastering едц";
-		String parseString = BookParser.getBookList();
-		assertEquals(testString, parseString);
-	}
-*/
 	
 	@Test
 	public void testBookProperties(){

@@ -12,6 +12,10 @@ public class BookStore implements BookList {
 		this.cart = new ArrayList<Book>();
 	}
 	
+	/*
+	 *	Search book by author or title
+	 */
+	
 	public Book[] list(String searchString) {
 		Book [] searchResults = new Book [bookList.size()];
 		int i = 0;
@@ -26,6 +30,10 @@ public class BookStore implements BookList {
 		return searchResults;
 	}
 	
+	/*
+	 *	Display all books in the inventory 
+	 */
+	
 	public Book [] showAll(){
 		Book [] fullBookList = new Book [bookList.size()];
 		int i = 0;
@@ -38,7 +46,10 @@ public class BookStore implements BookList {
 		return fullBookList;
 	}
 
-	//TODO check if author also matches
+	/*
+	 * Return true if book was found in the inventory, otherwise false
+	 */
+	
 	@Override
 	public boolean add(Book book, int quantity) {
 		for(Book book2: bookList){
@@ -54,6 +65,10 @@ public class BookStore implements BookList {
 		System.out.println("Your book was added to the inventory");
 		return false;
 	}
+	
+	/*
+	 *	Return a list of status codes depending on the status of the books in your cart
+	 */
 
 	@Override
 	public int[] buy(ArrayList<Book> cart) {
@@ -78,6 +93,10 @@ public class BookStore implements BookList {
 	
 	//TODO book names are ambigious and so are some of the authors, maybe make a choice list?
 	
+	/*
+	 *	Add book to cart, if it exists already just increment the quantity
+	 */
+	
 	public void addBookToCart(Book book){
 		
 		
@@ -95,6 +114,10 @@ public class BookStore implements BookList {
 
 	}
 	
+	/*
+	 * 	If book exists remove it from cart, otherwise return an error message
+	 */
+	
 	public void removeBookFromCart(Book book){
 		for(int i = 0; i < cart.size(); i++){
 			if(book.getTitle().equalsIgnoreCase(cart.get(i).getTitle())){
@@ -107,6 +130,10 @@ public class BookStore implements BookList {
 		System.out.println("Book was not found in cart");
 	}
 	
+	/*
+	 * 	Check if book exists in the inventory
+	 */
+	
 	public boolean isInInventory(Book book){
 		for(int i = 0; i < bookList.size(); i++){
 			if(book.getTitle().equalsIgnoreCase(bookList.get(i).getTitle())){
@@ -116,6 +143,10 @@ public class BookStore implements BookList {
 		
 		return false;
 	}
+	
+	/*
+	 *	Check if the quantity does not exceed the available quantity in the inventory 
+	 */
 	
 	public boolean isQuantityEnough(Book book){
 		for(int i = 0; i < bookList.size(); i++){
