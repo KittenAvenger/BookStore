@@ -12,6 +12,10 @@ public class BookStore implements BookList {
 		this.cart = new ArrayList<Book>();
 	}
 	
+	public ArrayList<Book> getBookList(){
+		return bookList;
+	}
+	
 	/*
 	 *	Search book by author or title
 	 */

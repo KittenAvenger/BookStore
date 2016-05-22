@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
+	static BookStore bookStore;
+	private static ArrayList <Book> finalCart;
+	
 	public static void main(String[] args) {
-		BookStore bookStore = new BookStore();		//	Create book inventory and populate from the text file
+		bookStore = new BookStore();		//	Create book inventory and populate from the text file
 		boolean isRunning = true, validNumber = false;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Hello and welcome to the Book Store! Choose an option in the list.\n");
@@ -105,6 +107,7 @@ public class Main {
 				case 5:	
 					
 					ArrayList <Book> cart = bookStore.cart;
+					finalCart = new ArrayList<Book>();
 					int [] statusList = bookStore.buy(cart);
 					
 					String OK = "OK";
@@ -112,9 +115,17 @@ public class Main {
 					String DOES_NOT_EXIST = "DOES_NOT_EXIST";
 					String status = "";
 					
+					if(statusList.length == 0){
+						System.out.println("Your cart is empty");
+						validNumber = false;
+						break;
+					}
+					
 					for(int i = 0; i < statusList.length; i++){
-						if(statusList[i] == 0)
+						if(statusList[i] == 0){
 							status = OK;
+							finalCart.add(findBookInInventory(cart.get(i)));
+						}
 						else if(statusList[i] == 1)
 							status = NOT_IN_STOCK;
 						else if(statusList[i] == 2)
@@ -122,12 +133,22 @@ public class Main {
 						System.out.printf("%-20.20s %20s \n", cart.get(i).getTitle(), status);
 					}
 					
-					if(statusList.length == 0)
-						System.out.println("Your cart is empty");
+					int sum = 0;
+					if(finalCart != null){
+						
+						for(Book validBook: finalCart){
+							sum += validBook.getPrice().intValue() * validBook.getQuantity();
+						}
+						
+						System.out.printf("Sum is: %d", sum);
+						
+						validNumber = false;
+						break;
+					}
 					
 					validNumber = false;
 					break;
-					
+									
 				case 6:
 					
 					System.out.println("Book store exited");
@@ -181,6 +202,20 @@ public class Main {
 	
 	public static void prettyPrint(Book book){
 		System.out.printf("%-20.20s %-20.20s %10d \n", book.getTitle(), book.getAuthor(), book.getPrice().intValue());
+	}
+	
+	public static Book findBookInInventory(Book book){
+		Book finalBook = new Book();
+		for(Book book2: bookStore.getBookList()){
+			if(book.getTitle().equalsIgnoreCase(book2.getTitle())){
+				finalBook.setTitle(book2.getTitle());
+				finalBook.setAuthor(book2.getAuthor());
+				finalBook.setPrice(book2.getPrice());
+				finalBook.setQuantity(book.getQuantity());
+			}
+		}
+		
+		return finalBook;
 	}
 
 }
